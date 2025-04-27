@@ -13,7 +13,7 @@ export default function AffiliateDisclosurePage() {
           </p>
           
           <p className="mt-6">
-            Affiliate Quiz participates in various affiliate marketing programs, which means we may earn commissions on products purchased through our links to retailer sites.
+            Fit Quizzy participates in various affiliate marketing programs, which means we may earn commissions on products purchased through our links to retailer sites.
           </p>
           
           <p>

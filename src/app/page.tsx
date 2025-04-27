@@ -1,8 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
+  const [scrollY, setScrollY] = useState(0);
+  const animationRef = useRef(null);
+
+  // Handle scroll event to update animation position
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Weight loss quiz data
   const quiz = {
     id: "weight-loss",
@@ -16,7 +30,8 @@ export default function Home() {
   const benefits = [
     {
       title: "Increased Energy",
-      description: "Shed excess weight and feel more energetic throughout the day",
+      description:
+        "Shed excess weight and feel more energetic throughout the day",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +51,8 @@ export default function Home() {
     },
     {
       title: "Better Sleep",
-      description: "Improve sleep quality and duration with healthy weight management",
+      description:
+        "Improve sleep quality and duration with healthy weight management",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +72,8 @@ export default function Home() {
     },
     {
       title: "Reduced Health Risks",
-      description: "Lower risk of heart disease, diabetes, and other health conditions",
+      description:
+        "Lower risk of heart disease, diabetes, and other health conditions",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -80,18 +97,41 @@ export default function Home() {
   const testimonials = [
     {
       name: "Sarah J.",
-      quote: "I lost 15 pounds in just 2 months using the recommended supplement. It helped control my cravings and gave me more energy for workouts!",
+      quote:
+        "I lost 15 pounds in just 2 months using the recommended supplement. It helped control my cravings and gave me more energy for workouts!",
       stars: 5,
     },
     {
       name: "Michael T.",
-      quote: "The personalized approach made all the difference. The quiz matched me with the perfect weight loss program for my busy lifestyle.",
+      quote:
+        "The personalized approach made all the difference. The quiz matched me with the perfect weight loss program for my busy lifestyle.",
       stars: 5,
     },
   ];
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full relative">
+      {/* Professional Fitness Animation Elements */}
+      <div
+        className="fixed top-0 left-0 w-full h-screen pointer-events-none overflow-hidden z-10"
+        aria-hidden="true"
+      >
+        {/* Motivational Text */}
+        <div
+          className="absolute transition-all duration-700 ease-out text-center"
+          style={{
+            bottom: `${Math.max(100, 100 + scrollY * 0.1)}px`,
+            right: `${Math.max(50, 50 + Math.cos(scrollY * 0.002) * 30)}px`,
+            opacity: Math.min(1, Math.max(0, (scrollY - 300) * 0.002)),
+            transform: `translateY(${Math.sin(scrollY * 0.003) * 10}px)`,
+          }}
+        >
+          <div className="bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-500 dark:to-blue-300 text-white text-sm md:text-base font-medium px-4 py-2 rounded-lg shadow-lg backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
+            Transform Your Life Today
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section with Quiz Intro */}
       <main className="flex flex-col items-center w-full">
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-blue-50 to-white dark:from-blue-950 dark:to-gray-950">
@@ -102,10 +142,16 @@ export default function Home() {
                   Health & Wellness
                 </span>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 dark:text-white">
-                  Your Journey to a <span className="text-blue-600 dark:text-blue-400">Healthier You</span> Starts Here
+                  Your Journey to a{" "}
+                  <span className="text-blue-600 dark:text-blue-400">
+                    Healthier You
+                  </span>{" "}
+                  Starts Here
                 </h1>
                 <p className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl">
-                  Discover personalized weight loss solutions tailored to your body, lifestyle, and goals. Take our quick quiz to find products that actually work for you.
+                  Discover personalized weight loss solutions tailored to your
+                  body, lifestyle, and goals. Take our quick quiz to find
+                  products that actually work for you.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
@@ -124,15 +170,15 @@ export default function Home() {
               </div>
               <div className="relative h-[400px] w-full rounded-xl overflow-hidden shadow-xl bg-blue-100 dark:bg-blue-900">
                 <div className="absolute inset-0 flex items-center justify-center text-blue-600 dark:text-blue-300">
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="64" 
-                    height="64" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="64"
+                    height="64"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                     strokeLinejoin="round"
                   >
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -147,15 +193,19 @@ export default function Home() {
         </section>
 
         {/* Quick Quiz Section */}
-        <section id="quick-quiz" className="w-full py-12 md:py-24 bg-white dark:bg-gray-950">
+        <section
+          id="quick-quiz"
+          className="w-full py-12 md:py-24 bg-white dark:bg-gray-950"
+        >
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2 max-w-[800px]">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gray-900 dark:text-white">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                   Find Your Perfect Weight Loss Solution
                 </h2>
                 <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 md:text-xl">
-                  Answer a few simple questions and get personalized product recommendations tailored to your needs.
+                  Answer a few simple questions and get personalized product
+                  recommendations tailored to your needs.
                 </p>
               </div>
               <div className="w-full max-w-3xl p-6 rounded-xl bg-blue-50 dark:bg-blue-900/30 shadow-sm border border-blue-100 dark:border-blue-800">
@@ -171,14 +221,18 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-12 md:py-24 bg-gray-50 dark:bg-gray-900">
+        <section
+          id="how-it-works"
+          className="w-full py-12 md:py-24 bg-gray-50 dark:bg-gray-900"
+        >
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-white">
                 How It Works
               </h2>
               <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 md:text-xl">
-                Our science-based approach helps you find the right weight loss products for your body type and goals.
+                Our science-based approach helps you find the right weight loss
+                products for your body type and goals.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -186,27 +240,36 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold text-xl">
                   1
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Take the Quiz</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                  Take the Quiz
+                </h3>
                 <p className="text-center text-gray-500 dark:text-gray-400">
-                  Answer simple questions about your weight loss goals, diet, and lifestyle.
+                  Answer simple questions about your weight loss goals, diet,
+                  and lifestyle.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-4 p-6 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:-translate-y-1 transition-transform duration-300">
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold text-xl">
                   2
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Get Personalized Results</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                  Get Personalized Results
+                </h3>
                 <p className="text-center text-gray-500 dark:text-gray-400">
-                  Receive product recommendations specifically tailored to your needs.
+                  Receive product recommendations specifically tailored to your
+                  needs.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-4 p-6 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:-translate-y-1 transition-transform duration-300">
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold text-xl">
                   3
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Start Your Journey</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                  Start Your Journey
+                </h3>
                 <p className="text-center text-gray-500 dark:text-gray-400">
-                  Purchase your recommended products and begin your weight loss journey.
+                  Purchase your recommended products and begin your weight loss
+                  journey.
                 </p>
               </div>
             </div>
@@ -233,7 +296,9 @@ export default function Home() {
                   <div className="rounded-full bg-blue-100 dark:bg-blue-900 p-3 text-blue-600 dark:text-blue-300">
                     {benefit.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">{benefit.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    {benefit.title}
+                  </h3>
                   <p className="text-center text-gray-500 dark:text-gray-400">
                     {benefit.description}
                   </p>
@@ -251,7 +316,8 @@ export default function Home() {
                 Success Stories
               </h2>
               <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 md:text-xl">
-                See how our personalized recommendations have helped others achieve their weight loss goals.
+                See how our personalized recommendations have helped others
+                achieve their weight loss goals.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -262,15 +328,15 @@ export default function Home() {
                 >
                   <div className="flex items-center space-x-4 mb-4">
                     <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300">
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="24" 
-                        height="24" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
                         strokeLinejoin="round"
                       >
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -278,7 +344,9 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">
+                        {testimonial.name}
+                      </h4>
                       <div className="flex">
                         {[...Array(testimonial.stars)].map((_, i) => (
                           <svg
@@ -296,7 +364,9 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <blockquote className="text-gray-600 dark:text-gray-300 italic">"{testimonial.quote}"</blockquote>
+                  <blockquote className="text-gray-600 dark:text-gray-300 italic">
+                    "{testimonial.quote}"
+                  </blockquote>
                 </div>
               ))}
             </div>
@@ -319,7 +389,8 @@ export default function Home() {
                 Ready to Transform Your Life?
               </h2>
               <p className="mx-auto max-w-[700px] text-blue-100 md:text-xl">
-                Take our quiz now and discover the perfect weight loss solutions for your body and lifestyle.
+                Take our quiz now and discover the perfect weight loss solutions
+                for your body and lifestyle.
               </p>
               <Link
                 href={`/quiz/${quiz.id}`}

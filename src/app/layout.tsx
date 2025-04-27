@@ -18,31 +18,31 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Affiliate Quiz - Find Your Perfect Products",
-    template: "%s | Affiliate Quiz",
+    default: "Fit Quizzy - Find Your Perfect Products",
+    template: "%s | Fit Quizzy",
   },
   description:
     "Take our interactive quizzes to discover the perfect products tailored to your needs with honest recommendations and reviews.",
   keywords: [
-    "affiliate quiz",
+    "Fit Quizzy",
     "product recommendations",
     "interactive quiz",
     "product finder",
   ],
-  authors: [{ name: "Affiliate Quiz Team" }],
-  creator: "Affiliate Quiz",
+  authors: [{ name: "Fit Quizzy Team" }],
+  creator: "Fit Quizzy",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://affiliate-quiz.com",
-    title: "Affiliate Quiz - Find Your Perfect Products",
+    title: "Fit Quizzy - Find Your Perfect Products",
     description:
       "Take our interactive quizzes to discover the perfect products tailored to your needs with honest recommendations and reviews.",
-    siteName: "Affiliate Quiz",
+    siteName: "Fit Quizzy",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Affiliate Quiz - Find Your Perfect Products",
+    title: "Fit Quizzy - Find Your Perfect Products",
     description:
       "Take our interactive quizzes to discover the perfect products tailored to your needs with honest recommendations and reviews.",
     creator: "@affiliatequiz",
